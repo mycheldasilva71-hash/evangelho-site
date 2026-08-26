@@ -259,7 +259,7 @@ export default function EvangelhoSite() {
                 clicar em "Conhecer Mais".
               */}
               <p className="text-zinc-200 text-xl leading-relaxed">
-                Escreva aqui Este site nasceu com um propósito claro: resgatar a verdadeira experiência da pregação e do ensino direto de Deus. Vivemos um tempo em que muitas igrejas se afastaram da Palavra, pregando heresias e meias-verdades que confortam, mas não salvam. Aqui você encontrará um chamado sincero para voltar às Escrituras, denunciar o erro com amor e firmeza, e proclamar o evangelho completo, sem concessões e sem medo..
+                Este site nasceu com um propósito claro: resgatar a verdadeira experiência da pregação e do ensino direto de Deus. Vivemos um tempo em que muitas igrejas se afastaram da Palavra, pregando heresias e meias-verdades que confortam, mas não salvam. Aqui você encontrará um chamado sincero para voltar às Escrituras, denunciar o erro com amor e firmeza, e proclamar o evangelho completo, sem concessões e sem medo..
               </p>
             </motion.div>
           </motion.div>
