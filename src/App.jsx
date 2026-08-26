@@ -1,9 +1,16 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 export default function EvangelhoSite() {
   const [modalAberto, setModalAberto] = useState(false)
   const [menuAberto, setMenuAberto] = useState(false)
+  const [rolou, setRolou] = useState(false)
+
+  useEffect(() => {
+    const aoRolar = () => setRolou(window.scrollY > 50)
+    window.addEventListener('scroll', aoRolar)
+    return () => window.removeEventListener('scroll', aoRolar)
+  }, [])
 
   return (
     <div className="min-h-screen bg-black text-white font-sans">
@@ -19,7 +26,11 @@ export default function EvangelhoSite() {
       >
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black" />
 
-        <header className="absolute top-0 left-0 w-full z-20 border-b border-yellow-500/20 bg-black/40 backdrop-blur-sm">
+        <header
+          className={`fixed top-0 left-0 w-full z-20 border-b border-yellow-500/20 bg-black/40 backdrop-blur-sm transition-all duration-500 ${
+            rolou ? 'opacity-100 -translate-y-0' : 'opacity-0 -translate-y-full pointer-events-none'
+          }`}
+        >
           <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-black tracking-wide text-yellow-400">
