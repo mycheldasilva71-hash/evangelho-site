@@ -97,9 +97,9 @@ export default function EvangelhoSite() {
             </p>
 
             <div className="flex flex-wrap gap-4">
-              <button className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded-2xl transition">
-                Assistir Conteúdo
-              </button>
+             <a href="https://www.youtube.com/@OEvangelhoNãopregado/shorts" target="_blank" rel="noopener noreferrer" className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded-2xl transition inline-block text-center">
+  Assistir Conteúdo
+</a>
 
               <button
                 onClick={() => setModalAberto(true)}
