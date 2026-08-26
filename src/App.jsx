@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 export default function EvangelhoSite() {
   const [modalAberto, setModalAberto] = useState(false)
+  const [menuAberto, setMenuAberto] = useState(false)
 
   return (
     <div className="min-h-screen bg-black text-white font-sans">
@@ -29,12 +30,34 @@ export default function EvangelhoSite() {
               </p>
             </div>
 
-            <nav className="hidden md:flex gap-8 text-sm uppercase tracking-wider text-zinc-300">
-              <a href="#" className="hover:text-yellow-400 transition">Início</a>
-              <a href="#videos" className="hover:text-yellow-400 transition">Vídeos</a>
-              <a href="#estudos" className="hover:text-yellow-400 transition">Estudos</a>
-              <a href="#sobre" className="hover:text-yellow-400 transition">Sobre</a>
-            </nav>
+            <div className="relative">
+              <button
+                onClick={() => setMenuAberto(!menuAberto)}
+                className="flex flex-col justify-center gap-1.5 w-9 h-9 group"
+                aria-label="Abrir menu"
+              >
+                <span className={`block h-0.5 w-7 bg-zinc-200 group-hover:bg-yellow-400 transition-all duration-300 ${menuAberto ? 'rotate-45 translate-y-2' : ''}`} />
+                <span className={`block h-0.5 w-7 bg-zinc-200 group-hover:bg-yellow-400 transition-all duration-300 ${menuAberto ? 'opacity-0' : ''}`} />
+                <span className={`block h-0.5 w-7 bg-zinc-200 group-hover:bg-yellow-400 transition-all duration-300 ${menuAberto ? '-rotate-45 -translate-y-2' : ''}`} />
+              </button>
+
+              <AnimatePresence>
+                {menuAberto && (
+                  <motion.nav
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.25 }}
+                    className="absolute right-0 top-14 flex flex-col gap-1 text-sm uppercase tracking-wider text-zinc-300 bg-black/90 border border-yellow-500/20 rounded-2xl backdrop-blur-sm p-4 min-w-[180px]"
+                  >
+                    <a onClick={() => setMenuAberto(false)} href="#" className="hover:text-yellow-400 transition py-2 px-2 rounded-lg hover:bg-white/5">Início</a>
+                    <a onClick={() => setMenuAberto(false)} href="#videos" className="hover:text-yellow-400 transition py-2 px-2 rounded-lg hover:bg-white/5">Vídeos</a>
+                    <a onClick={() => setMenuAberto(false)} href="#estudos" className="hover:text-yellow-400 transition py-2 px-2 rounded-lg hover:bg-white/5">Estudos</a>
+                    <a onClick={() => setMenuAberto(false)} href="#sobre" className="hover:text-yellow-400 transition py-2 px-2 rounded-lg hover:bg-white/5">Sobre</a>
+                  </motion.nav>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
         </header>
 
@@ -259,7 +282,7 @@ export default function EvangelhoSite() {
                 clicar em "Conhecer Mais".
               */}
               <p className="text-zinc-200 text-xl leading-relaxed">
-                Este site nasceu com um propósito claro: resgatar a verdadeira experiência da pregação e do ensino direto de Deus. Vivemos um tempo em que muitas igrejas se afastaram da Palavra, pregando heresias e meias-verdades que confortam, mas não salvam. Aqui você encontrará um chamado sincero para voltar às Escrituras, denunciar o erro com amor e firmeza, e proclamar o evangelho completo, sem concessões e sem medo..
+                Este site nasceu com um propósito claro: resgatar a verdadeira experiência da pregação e do ensino direto de Deus. Vivemos um tempo em que muitas igrejas se afastaram da Palavra, pregando heresias e meias-verdades que confortam, mas não salvam. Aqui você encontrará um chamado sincero para voltar às Escrituras, denunciar o erro com amor e firmeza, e proclamar o evangelho completo, sem concessões e sem medo.
               </p>
             </motion.div>
           </motion.div>
