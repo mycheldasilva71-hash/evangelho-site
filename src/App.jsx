@@ -1,6 +1,9 @@
-import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export default function EvangelhoSite() {
+  const [modalAberto, setModalAberto] = useState(false)
+
   return (
     <div className="min-h-screen bg-black text-white font-sans">
       {/* HERO */}
@@ -64,14 +67,17 @@ export default function EvangelhoSite() {
                 Assistir Conteúdo
               </button>
 
-              <button className="border border-white/20 hover:border-yellow-400 hover:text-yellow-400 px-8 py-4 rounded-2xl transition">
+              <button
+                onClick={() => setModalAberto(true)}
+                className="border border-white/20 hover:border-yellow-400 hover:text-yellow-400 px-8 py-4 rounded-2xl transition"
+              >
                 Conhecer Mais
               </button>
             </div>
           </div>
 
           <div className="bg-black/50 border border-yellow-500/20 rounded-3xl p-8 backdrop-blur-md shadow-2xl">
-            <p className="text-yellow-400 text-5xl mb-6">"</p>
+            <p className="text-yellow-400 text-5xl mb-6">“</p>
 
             <p className="text-2xl leading-relaxed text-zinc-200 mb-6">
               Porque não me envergonho do evangelho, porque é o poder de Deus para salvação de todo aquele que crê.
@@ -180,7 +186,7 @@ export default function EvangelhoSite() {
             </p>
 
             <p className="text-3xl leading-relaxed font-light text-zinc-100 mb-6">
-              "Mas Deus prova o seu amor para conosco em que Cristo morreu por nós, sendo nós ainda pecadores."
+              “Mas Deus prova o seu amor para conosco em que Cristo morreu por nós, sendo nós ainda pecadores.”
             </p>
 
             <p className="text-yellow-400 font-bold tracking-widest uppercase">
@@ -217,6 +223,48 @@ export default function EvangelhoSite() {
           © 2026 • Todos os direitos reservados
         </p>
       </footer>
+
+      {/* MODAL "CONHECER MAIS" */}
+      <AnimatePresence>
+        {modalAberto && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setModalAberto(false)}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm px-6"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.25 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-xl w-full bg-black/60 border border-yellow-500/30 rounded-3xl p-10 backdrop-blur-xl shadow-2xl text-center"
+            >
+              <button
+                onClick={() => setModalAberto(false)}
+                className="absolute top-5 right-6 text-zinc-400 hover:text-yellow-400 text-2xl leading-none transition"
+              >
+                ×
+              </button>
+
+              <p className="text-yellow-400 uppercase tracking-[0.3em] text-sm mb-4">
+                Conheça mais
+              </p>
+
+              {/*
+                EDITE O TEXTO ABAIXO — é aqui que você escreve o que
+                quer que apareça dentro do quadrado quando a pessoa
+                clicar em "Conhecer Mais".
+              */}
+              <p className="text-zinc-200 text-xl leading-relaxed">
+                Escreva aqui Este site nasceu com um propósito claro: resgatar a verdadeira experiência da pregação e do ensino direto de Deus. Vivemos um tempo em que muitas igrejas se afastaram da Palavra, pregando heresias e meias-verdades que confortam, mas não salvam. Aqui você encontrará um chamado sincero para voltar às Escrituras, denunciar o erro com amor e firmeza, e proclamar o evangelho completo, sem concessões e sem medo..
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
