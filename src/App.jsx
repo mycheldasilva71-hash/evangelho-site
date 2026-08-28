@@ -5,9 +5,13 @@ export default function EvangelhoSite() {
   const [modalAberto, setModalAberto] = useState(false)
   const [menuAberto, setMenuAberto] = useState(false)
   const [rolou, setRolou] = useState(false)
+  const [scrollY, setScrollY] = useState(0)
 
   useEffect(() => {
-    const aoRolar = () => setRolou(window.scrollY > 50)
+    const aoRolar = () => {
+      setRolou(window.scrollY > 50)
+      setScrollY(window.scrollY)
+    }
     window.addEventListener('scroll', aoRolar)
     return () => window.removeEventListener('scroll', aoRolar)
   }, [])
@@ -15,15 +19,20 @@ export default function EvangelhoSite() {
   return (
     <div className="min-h-screen bg-black text-white font-sans">
       {/* HERO */}
-      <section
-        className="relative min-h-screen flex items-center justify-center overflow-hidden"
-        style={{
-          backgroundImage:
-            "linear-gradient(to bottom, rgba(0,0,0,.75), rgba(0,0,0,.92)), url('https://images.unsplash.com/photo-1504052434569-70ad5836ab65?q=80&w=1600&auto=format&fit=crop')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <motion.div
+          className="absolute inset-0"
+          initial={{ opacity: 0, scale: 1.3 }}
+          animate={{ opacity: 1, scale: 1.15 }}
+          transition={{ duration: 1.4, ease: 'easeOut' }}
+          style={{
+            transform: `translateY(${scrollY * 0.35}px)`,
+            backgroundImage:
+              "linear-gradient(to bottom, rgba(0,0,0,.75), rgba(0,0,0,.92)), url('https://images.unsplash.com/photo-1504052434569-70ad5836ab65?q=80&w=1600&auto=format&fit=crop')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black" />
 
         <header
@@ -97,9 +106,14 @@ export default function EvangelhoSite() {
             </p>
 
             <div className="flex flex-wrap gap-4">
-             <a href="https://www.youtube.com/@OEvangelhoNãopregado/shorts" target="_blank" rel="noopener noreferrer" className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded-2xl transition inline-block text-center">
-  Assistir Conteúdo
-</a>
+              <a
+                href="https://www.youtube.com/@OEvangelhoN%C3%A3opregado/shorts"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded-2xl transition inline-block text-center"
+              >
+                Assistir Conteúdo
+              </a>
 
               <button
                 onClick={() => setModalAberto(true)}
