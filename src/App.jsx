@@ -41,7 +41,13 @@ export default function EvangelhoSite() {
           }`}
         >
           <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
-            <div>
+            <div
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+                setMenuAberto(false)
+              }}
+              className="cursor-pointer select-none"
+            >
               <h1 className="text-2xl font-black tracking-wide text-yellow-400">
                 O EVANGELHO
               </h1>
