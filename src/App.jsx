@@ -26,7 +26,7 @@ export default function EvangelhoSite() {
           animate={{ opacity: 1, scale: 1.15 }}
           transition={{ duration: 1.4, ease: 'easeOut' }}
           style={{
-            transform: `translateY(${scrollY * 0.35}px)`,
+            transform: `translateY(${scrollY * 0.6}px)`,
             backgroundImage:
               "linear-gradient(to bottom, rgba(0,0,0,.75), rgba(0,0,0,.92)), url('https://images.unsplash.com/photo-1504052434569-70ad5836ab65?q=80&w=1600&auto=format&fit=crop')",
             backgroundSize: 'cover',
