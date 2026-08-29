@@ -7,6 +7,26 @@ export default function EvangelhoSite() {
   const [rolou, setRolou] = useState(false)
   const [scrollY, setScrollY] = useState(0)
   const [cardComMouse, setCardComMouse] = useState(null)
+  const [versiculoAtual, setVersiculoAtual] = useState(0)
+
+  const versiculos = [
+    {
+      texto: 'Porque não me envergonho do evangelho, porque é o poder de Deus para salvação de todo aquele que crê.',
+      referencia: 'Romanos 1:16',
+    },
+    {
+      texto: 'Toda a Escritura é divinamente inspirada e proveitosa para ensinar, para redarguir, para corrigir, para instruir em justiça.',
+      referencia: '2 Timóteo 3:16',
+    },
+    {
+      texto: 'Prega a palavra, insta a tempo e fora de tempo, redarguí, repreende, exorta com toda a paciência e doutrina.',
+      referencia: '2 Timóteo 4:2',
+    },
+    {
+      texto: 'Porque o Filho do homem veio buscar e salvar o que se havia perdido.',
+      referencia: 'Lucas 19:10',
+    },
+  ]
 
   useEffect(() => {
     const aoRolar = () => {
@@ -131,16 +151,37 @@ export default function EvangelhoSite() {
             </div>
           </div>
 
-          <div className="bg-black/50 border border-yellow-500/20 rounded-3xl p-8 backdrop-blur-md shadow-2xl">
-            <p className="text-yellow-400 text-5xl mb-6">“</p>
+          <div className="relative bg-black/50 border border-yellow-500/20 rounded-3xl p-8 backdrop-blur-md shadow-2xl overflow-hidden" style={{ perspective: '1200px' }}>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={versiculoAtual}
+                initial={{ rotateY: 90, opacity: 0 }}
+                animate={{ rotateY: 0, opacity: 1 }}
+                exit={{ rotateY: -90, opacity: 0 }}
+                transition={{ duration: 0.5, ease: 'easeInOut' }}
+                style={{ transformOrigin: 'left center' }}
+              >
+                <p className="text-yellow-400 text-5xl mb-6">"</p>
 
-            <p className="text-2xl leading-relaxed text-zinc-200 mb-6">
-              Porque não me envergonho do evangelho, porque é o poder de Deus para salvação de todo aquele que crê.
-            </p>
+                <p className="text-2xl leading-relaxed text-zinc-200 mb-6 min-h-[9rem]">
+                  {versiculos[versiculoAtual].texto}
+                </p>
 
-            <p className="text-yellow-400 font-semibold tracking-widest uppercase">
-              Romanos 1:16
-            </p>
+                <p className="text-yellow-400 font-semibold tracking-widest uppercase">
+                  {versiculos[versiculoAtual].referencia}
+                </p>
+              </motion.div>
+            </AnimatePresence>
+
+            <button
+              onClick={() =>
+                setVersiculoAtual((atual) => (atual + 1) % versiculos.length)
+              }
+              aria-label="Próximo versículo"
+              className="absolute top-1/2 -translate-y-1/2 -right-4 w-12 h-12 rounded-full bg-yellow-500 hover:bg-yellow-400 text-black flex items-center justify-center text-2xl font-bold shadow-lg transition"
+            >
+              ›
+            </button>
           </div>
         </motion.div>
 
