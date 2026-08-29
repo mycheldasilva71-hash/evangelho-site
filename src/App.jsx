@@ -6,6 +6,7 @@ export default function EvangelhoSite() {
   const [menuAberto, setMenuAberto] = useState(false)
   const [rolou, setRolou] = useState(false)
   const [scrollY, setScrollY] = useState(0)
+  const [cardComMouse, setCardComMouse] = useState(null)
 
   useEffect(() => {
     const aoRolar = () => {
@@ -178,13 +179,27 @@ export default function EvangelhoSite() {
             ].map((item, index) => (
               <div
                 key={index}
+                onMouseEnter={() => setCardComMouse(index)}
+                onMouseLeave={() => setCardComMouse(null)}
                 className="group bg-black border border-white/10 hover:border-yellow-400/40 rounded-3xl overflow-hidden transition duration-300 hover:-translate-y-2"
               >
                 <div className="h-64 bg-gradient-to-br from-zinc-900 to-zinc-800 flex items-end p-6 relative overflow-hidden">
                   <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,rgba(255,215,0,0.5),transparent_60%)]" />
 
-                  {/* Luz suave amarela que desliza ao passar o mouse */}
-                  <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out bg-gradient-to-r from-transparent via-yellow-300/20 to-transparent pointer-events-none" />
+                  {/* Luz suave amarela em loop enquanto o mouse fica em cima */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-yellow-300/25 to-transparent pointer-events-none"
+                    animate={
+                      cardComMouse === index
+                        ? { x: ['-100%', '100%'] }
+                        : { x: '-100%' }
+                    }
+                    transition={
+                      cardComMouse === index
+                        ? { duration: 1.4, repeat: Infinity, ease: 'easeInOut' }
+                        : { duration: 0 }
+                    }
+                  />
 
                   <div className="relative z-10">
                     <h4 className="text-3xl font-black leading-tight mb-3 group-hover:text-yellow-400 transition">
