@@ -167,21 +167,27 @@ export default function EvangelhoSite() {
               {
                 title: 'A Verdade Sobre a Graça',
                 subtitle: 'O que quase ninguém explica.',
+                link: 'https://www.youtube.com/@OEvangelhoNãopregado/shorts',
               },
               {
                 title: 'Soberania de Deus',
                 subtitle: 'A vontade humana e o propósito eterno.',
+                link: 'https://www.youtube.com/@OEvangelhoNãopregado/shorts',
               },
               {
                 title: 'O Evangelho Não Pregado',
                 subtitle: 'A maior distorção dos nossos dias.',
+                link: 'https://www.youtube.com/@OEvangelhoNãopregado/shorts',
               },
             ].map((item, index) => (
-              <div
+              <a
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
                 key={index}
                 onMouseEnter={() => setCardComMouse(index)}
                 onMouseLeave={() => setCardComMouse(null)}
-                className="group bg-black border border-white/10 hover:border-yellow-400/40 rounded-3xl overflow-hidden transition duration-300 hover:-translate-y-2"
+                className="group bg-black border border-white/10 hover:border-yellow-400/40 rounded-3xl overflow-hidden transition duration-300 hover:-translate-y-2 cursor-pointer block"
               >
                 <div className="h-64 bg-gradient-to-br from-zinc-900 to-zinc-800 flex items-end p-6 relative overflow-hidden">
                   <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,rgba(255,215,0,0.5),transparent_60%)]" />
@@ -211,7 +217,7 @@ export default function EvangelhoSite() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </a>
             ))}
           </div>
         </div>
