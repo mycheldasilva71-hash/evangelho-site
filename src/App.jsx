@@ -61,8 +61,24 @@ export default function EvangelhoSite() {
               opacity: { duration: 1, ease: 'easeIn' },
             }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center gap-10"
+            className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-10 overflow-hidden"
+            style={{
+              background:
+                'radial-gradient(ellipse at center, #2a1a10 0%, #140b06 45%, #050302 100%)',
+            }}
           >
+            {/* Brilho suave tipo luz de vela atrás da Bíblia */}
+            <div
+              className="absolute rounded-full pointer-events-none"
+              style={{
+                width: 520,
+                height: 520,
+                background:
+                  'radial-gradient(circle, rgba(212,175,55,0.18) 0%, rgba(212,175,55,0.06) 45%, transparent 70%)',
+                filter: 'blur(10px)',
+              }}
+            />
+
             <button
               onClick={() => {
                 if (bibliaLevantada) return
