@@ -28,6 +28,7 @@ export default function EvangelhoSite() {
     },
   ]
 
+  const [bibliaLevantada, setBibliaLevantada] = useState(false)
   const [bibliaAberta, setBibliaAberta] = useState(false)
   const [zoomIniciado, setZoomIniciado] = useState(false)
   const [mostrarIntro, setMostrarIntro] = useState(true)
@@ -64,10 +65,11 @@ export default function EvangelhoSite() {
           >
             <button
               onClick={() => {
-                if (bibliaAberta) return
-                setBibliaAberta(true)
-                setTimeout(() => setZoomIniciado(true), 1000)
-                setTimeout(() => setMostrarIntro(false), 2000)
+                if (bibliaLevantada) return
+                setBibliaLevantada(true)
+                setTimeout(() => setBibliaAberta(true), 900)
+                setTimeout(() => setZoomIniciado(true), 1900)
+                setTimeout(() => setMostrarIntro(false), 2900)
               }}
               aria-label="Clique para entrar no site"
               className="relative"
@@ -81,16 +83,16 @@ export default function EvangelhoSite() {
                   transformStyle: 'preserve-3d',
                 }}
                 animate={
-                  bibliaAberta
-                    ? { rotateX: 12, rotateY: -18 }
-                    : { rotateY: [-18, -10, -18] }
+                  bibliaLevantada
+                    ? { rotateX: 12, rotateY: -18, y: 0 }
+                    : { rotateX: 78, rotateY: [-18, -10, -18], y: 30 }
                 }
                 transition={
-                  bibliaAberta
-                    ? { duration: 0.6 }
+                  bibliaLevantada
+                    ? { duration: 0.9, ease: 'easeInOut' }
                     : { duration: 4, repeat: Infinity, ease: 'easeInOut' }
                 }
-                initial={{ rotateX: 12, rotateY: -18 }}
+                initial={{ rotateX: 78, rotateY: -18, y: 30 }}
               >
                 {/* Pilha de páginas com textura de folhas finas, borda dourada */}
                 {[0, 1, 2, 3, 4, 5].map((i) => (
@@ -216,12 +218,20 @@ export default function EvangelhoSite() {
               </motion.div>
 
               {/* Sombra no "chão", reforça a sensação de objeto 3D */}
-              <div className="mx-auto mt-16 w-52 h-5 rounded-full bg-black/60 blur-md" />
+              <motion.div
+                animate={
+                  bibliaLevantada
+                    ? { width: 208, opacity: 0.6 }
+                    : { width: 280, opacity: 0.85 }
+                }
+                transition={{ duration: 0.9, ease: 'easeInOut' }}
+                className="mx-auto mt-16 h-5 rounded-full bg-black/60 blur-md"
+              />
             </button>
 
             <motion.p
-              animate={{ opacity: bibliaAberta ? 0 : [0.4, 1, 0.4] }}
-              transition={{ duration: 1.8, repeat: bibliaAberta ? 0 : Infinity }}
+              animate={{ opacity: bibliaLevantada ? 0 : [0.4, 1, 0.4] }}
+              transition={{ duration: 1.8, repeat: bibliaLevantada ? 0 : Infinity }}
               className="text-yellow-400 uppercase tracking-[0.3em] text-sm"
             >
               Clique aqui para entrar
