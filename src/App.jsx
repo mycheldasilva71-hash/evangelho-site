@@ -28,6 +28,10 @@ export default function EvangelhoSite() {
     },
   ]
 
+  const [bibliaAberta, setBibliaAberta] = useState(false)
+  const [zoomIniciado, setZoomIniciado] = useState(false)
+  const [mostrarIntro, setMostrarIntro] = useState(true)
+
   useEffect(() => {
     const aoRolar = () => {
       setRolou(window.scrollY > 50)
@@ -37,8 +41,195 @@ export default function EvangelhoSite() {
     return () => window.removeEventListener('scroll', aoRolar)
   }, [])
 
+  useEffect(() => {
+    document.body.style.overflow = mostrarIntro ? 'hidden' : 'auto'
+  }, [mostrarIntro])
+
   return (
     <div className="min-h-screen bg-black text-white font-sans">
+      {/* TELA DE ABERTURA - BÍBLIA */}
+      <AnimatePresence>
+        {mostrarIntro && (
+          <motion.div
+            animate={{
+              scale: zoomIniciado ? 22 : 1,
+              opacity: zoomIniciado ? 0 : 1,
+            }}
+            transition={{
+              scale: { duration: 1, ease: 'easeIn' },
+              opacity: { duration: 1, ease: 'easeIn' },
+            }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center gap-10"
+          >
+            <button
+              onClick={() => {
+                if (bibliaAberta) return
+                setBibliaAberta(true)
+                setTimeout(() => setZoomIniciado(true), 1000)
+                setTimeout(() => setMostrarIntro(false), 2000)
+              }}
+              aria-label="Clique para entrar no site"
+              className="relative"
+              style={{ perspective: '1400px' }}
+            >
+              <motion.div
+                className="relative"
+                style={{
+                  width: 'clamp(260px, 68vw, 340px)',
+                  height: 'clamp(348px, 91vw, 454px)',
+                  transformStyle: 'preserve-3d',
+                }}
+                animate={
+                  bibliaAberta
+                    ? { rotateX: 12, rotateY: -18 }
+                    : { rotateY: [-18, -10, -18] }
+                }
+                transition={
+                  bibliaAberta
+                    ? { duration: 0.6 }
+                    : { duration: 4, repeat: Infinity, ease: 'easeInOut' }
+                }
+                initial={{ rotateX: 12, rotateY: -18 }}
+              >
+                {/* Pilha de páginas com textura de folhas finas, borda dourada */}
+                {[0, 1, 2, 3, 4, 5].map((i) => (
+                  <div
+                    key={i}
+                    className="absolute inset-0 rounded-sm"
+                    style={{
+                      transform: `translateZ(${-6 - i * 4}px) translate(${2 + i * 1.6}px, ${2 + i * 1.6}px)`,
+                      background:
+                        'repeating-linear-gradient(180deg, #f6e7c1 0px, #f6e7c1 1.5px, #e8d19f 1.5px, #e8d19f 3px)',
+                      boxShadow: '0 2px 6px rgba(0,0,0,0.35)',
+                    }}
+                  />
+                ))}
+
+                {/* Fita marcadora de página, pendurada pra fora */}
+                <div
+                  className="absolute bg-gradient-to-b from-red-700 to-red-800"
+                  style={{
+                    width: 18,
+                    height: 120,
+                    right: 62,
+                    bottom: -46,
+                    transform: 'translateZ(2px)',
+                    clipPath: 'polygon(0 0, 100% 0, 100% 88%, 50% 100%, 0 88%)',
+                    boxShadow: '0 3px 5px rgba(0,0,0,0.4)',
+                  }}
+                />
+
+                {/* Capa da frente, em "couro", com dobradiça na esquerda (spine) */}
+                <motion.div
+                  animate={{ rotateY: bibliaAberta ? -165 : 0 }}
+                  transition={{ duration: 1, ease: 'easeInOut' }}
+                  style={{
+                    transformOrigin: 'left center',
+                    backfaceVisibility: 'hidden',
+                    transform: 'translateZ(4px)',
+                    background:
+                      'radial-gradient(120% 90% at 30% 15%, #5a2a1e 0%, #3d1b12 45%, #24100a 100%)',
+                  }}
+                  className="absolute inset-0 rounded-sm border border-yellow-600/30 shadow-2xl overflow-hidden"
+                >
+                  {/* Brilho de couro (reflexo suave no canto superior) */}
+                  <div
+                    className="absolute inset-0 opacity-40"
+                    style={{
+                      background:
+                        'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 35%)',
+                    }}
+                  />
+
+                  {/* Moldura dourada gravada */}
+                  <div className="absolute inset-4 border-2 border-yellow-600/70 rounded-sm" />
+                  <div className="absolute inset-6 border border-yellow-600/40 rounded-sm" />
+
+                  {/* Cantoneiras metálicas nos 4 cantos, comuns em bíblias antigas */}
+                  {[
+                    { top: 10, left: 10 },
+                    { top: 10, right: 10 },
+                    { bottom: 10, left: 10 },
+                    { bottom: 10, right: 10 },
+                  ].map((pos, i) => (
+                    <div
+                      key={i}
+                      className="absolute w-5 h-5 rounded-full"
+                      style={{
+                        ...pos,
+                        background:
+                          'radial-gradient(circle at 35% 30%, #f5dc8a, #a3791f 70%)',
+                        boxShadow: 'inset 0 0 2px rgba(0,0,0,0.6), 0 1px 2px rgba(0,0,0,0.5)',
+                      }}
+                    />
+                  ))}
+
+                  {/* Fivela metálica de fechamento, na borda direita */}
+                  <div
+                    className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 rounded-sm"
+                    style={{
+                      width: 22,
+                      height: 34,
+                      background: 'linear-gradient(135deg, #f5dc8a, #a3791f 60%, #7a5a1e)',
+                      boxShadow: 'inset 0 0 3px rgba(0,0,0,0.6), 0 2px 3px rgba(0,0,0,0.5)',
+                      border: '1px solid rgba(0,0,0,0.3)',
+                    }}
+                  />
+
+                  {/* Cruz em relevo (sombra + brilho pra parecer gravada no couro) */}
+                  <div className="absolute inset-0 flex items-center justify-center pt-8">
+                    <div className="relative w-20 h-24">
+                      <div
+                        className="absolute left-1/2 top-0 -translate-x-1/2 w-4 h-24 rounded-sm"
+                        style={{
+                          background: 'linear-gradient(90deg, #7a5a1e, #d4af37 45%, #7a5a1e)',
+                          boxShadow:
+                            'inset 0 0 3px rgba(0,0,0,0.6), 0 1px 1px rgba(255,255,255,0.3)',
+                        }}
+                      />
+                      <div
+                        className="absolute left-1/2 top-5 -translate-x-1/2 w-20 h-4 rounded-sm"
+                        style={{
+                          background: 'linear-gradient(180deg, #7a5a1e, #d4af37 45%, #7a5a1e)',
+                          boxShadow:
+                            'inset 0 0 3px rgba(0,0,0,0.6), 0 1px 1px rgba(255,255,255,0.3)',
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Título gravado em dourado */}
+                  <p
+                    className="absolute bottom-10 left-0 right-0 text-center text-sm tracking-[0.25em] uppercase px-4"
+                    style={{
+                      color: '#d4af37',
+                      textShadow: '0 1px 1px rgba(0,0,0,0.6), 0 0 2px rgba(212,175,55,0.4)',
+                    }}
+                  >
+                    O Evangelho Não Pregado
+                  </p>
+
+                  {/* Lombada (spine) com sombra, reforça a profundidade */}
+                  <div className="absolute left-0 top-0 h-full w-4 bg-gradient-to-r from-black/70 to-transparent" />
+                </motion.div>
+              </motion.div>
+
+              {/* Sombra no "chão", reforça a sensação de objeto 3D */}
+              <div className="mx-auto mt-16 w-52 h-5 rounded-full bg-black/60 blur-md" />
+            </button>
+
+            <motion.p
+              animate={{ opacity: bibliaAberta ? 0 : [0.4, 1, 0.4] }}
+              transition={{ duration: 1.8, repeat: bibliaAberta ? 0 : Infinity }}
+              className="text-yellow-400 uppercase tracking-[0.3em] text-sm"
+            >
+              Clique aqui para entrar
+            </motion.p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* HERO */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <motion.div
